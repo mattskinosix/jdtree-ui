@@ -3,28 +3,33 @@
     <v-card color="black">
       <v-card-actions>
         <v-spacer></v-spacer>
-          <v-btn icon="fas fa-edit" @click="state.modify=!state.modify" ></v-btn>
-          <v-btn icon="fas fa-add" @click="addLeaf" ></v-btn>
-          <v-btn icon="fas fa-minus" @click="removeLeaf" ></v-btn>
+          <v-btn icon="fas fa-edit" @click="state.modify=!state.modify"></v-btn>
+          <v-btn icon="fas fa-add" @click="addLeaf"></v-btn>
+          <v-btn icon="fas fa-minus" @click="removeLeaf"></v-btn>
+          <v-btn icon="fas fa-minus" @click="log"></v-btn>
         <v-spacer></v-spacer>
+
       </v-card-actions>
 
       <v-card-actions>
         <v-text-field
           :disabled="state.modify"
-          v-model="node.variable"
           label="variable"
+          @input="$emit('update:variable', $event.target.value)"
+          :value="variable"
         >
         </v-text-field>
         <v-text-field
           :disabled="state.modify"
-          v-model="node.operator"
           label="operator"
+          @input="$emit('update:operator', $event.target.value)"
+          :value="operator"
         >
         </v-text-field>
         <v-text-field
           :disabled="state.modify"
-          v-model="node.value"
+          @input="$emit('update:value', $event.target.value)"
+          :value="value"
           label="value"
         >
         </v-text-field>
@@ -33,45 +38,77 @@
   </v-container>
   <v-row>
     <v-col 
-      v-for="leaf in node.leafs"
+      v-for="leaf in leafs"
       :key="leaf.id" 
     >
+      <v-icon icon="fas fa-arrow-down-long">
+
+      </v-icon>
+        <br>
+      
       <TreeNode
-        :children="leaf"
+        v-model:leafs="leaf.leafs"
+        v-model:value="leaf.value"
+        v-model:operator="leaf.operator"
+        v-model:variable="leaf.variable"
       />
       </v-col>
   </v-row>
- </template>
+
+</template>
  
 <script>
 import { uuid } from 'vue-uuid'; 
 export default {
   name: 'TreeNode',
-  props: ['value'],
+  props: {
+    leafs: {
+      type: Array,
+      required: true
+    },
+    value: {
+      type: String,
+      required: true
+    },
+    variable: {
+      type: String,
+      default: '',
+      required: true
+    },
+    operator: {
+      type: String,
+      required: true
+    },
+  },
   data: () => ({
     state: {
-      modify: false,
+      modify: false
     },
-    node: this.value,
+    leafsMutable: []
   }),
   methods: {
     addLeaf(){
-      this.node.leafs.push({
+      this.leafsMutable.push({
         id: uuid.v4(),
         value: '',
         operator: '',
         variable: '',
         leafs: []
       })
-      this.handleInput()
+      this.$emit("update:leafs", this.leafsMutable)
     },
     removeLeaf(){
-      this.leafs.splice(this.leafs.length-1, 1)
-      this.handleInput()
+      this.leafsMutable.splice(this.leafsMutable.length-1, 1)
+      this.$emit("update:leafs", this.leafsMutable)
     },
-    handleInput () {
-      this.$emit('input', this.node)
+    log(){
+      console.log(this)
     }
+  },
+  created(){
+
+      console.log(this.leafs)
   }
+
 }
 </script>

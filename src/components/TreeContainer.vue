@@ -1,7 +1,14 @@
 <template>
-  <TreeNode v-model="tree">
+
+  <TreeNode 
+    v-model:leafs="tree.leafs"
+    v-model:operator="tree.operator"
+    v-model:value="tree.value"
+    v-model:variable="tree.variable"
+  >
   </TreeNode>
   <v-textarea
+    disabled
     readonly>
     {{ tree }}
   </v-textarea>
@@ -24,6 +31,11 @@ export default {
       leafs: []
     }
   }),
+  methods: {
+    log(){
+      console.log(this.tree)
+    }
+  },
 }
 </script>
 
