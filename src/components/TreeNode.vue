@@ -1,35 +1,35 @@
 <template>
   <v-container>
     <v-card color="black">
-      <v-card-actions>
-        <v-spacer></v-spacer>
-          <v-btn icon="fas fa-edit" @click="state.modify=!state.modify"></v-btn>
-          <v-btn icon="fas fa-add" @click="addLeaf"></v-btn>
-          <v-btn icon="fas fa-minus" @click="removeLeaf"></v-btn>
-          <v-btn icon="fas fa-minus" @click="log"></v-btn>
-        <v-spacer></v-spacer>
+      <v-card-actions >
+          <v-btn v-if="!root" icon="fas fa-edit" @click="state.modify=!state.modify"></v-btn>
 
+          <v-btn @click="addLeaf">+ condition</v-btn>
+
+          <v-btn @click="addResultLeaf">set result</v-btn>
+
+          <v-btn @click="removeLeaf"> - condition</v-btn>
       </v-card-actions>
 
-      <v-card-actions>
+      <v-card-actions v-if="!root">
         <v-text-field
           :disabled="state.modify"
           label="variable"
           @input="$emit('update:variable', $event.target.value)"
-          :value="variable"
+          :data-value="variable"
         >
         </v-text-field>
         <v-text-field
           :disabled="state.modify"
           label="operator"
           @input="$emit('update:operator', $event.target.value)"
-          :value="operator"
+          :data-value="operator"
         >
         </v-text-field>
         <v-text-field
           :disabled="state.modify"
           @input="$emit('update:value', $event.target.value)"
-          :value="value"
+          :data-value="value"
           label="value"
         >
         </v-text-field>
@@ -46,7 +46,13 @@
       </v-icon>
         <br>
       
-      <TreeNode
+      <ResultNode 
+        v-if="leaf.hasOwnProperty('result')"
+        v-model:result="leaf.result"
+      />
+
+      <TreeNode 
+        v-if="!leaf.hasOwnProperty('result')"
         v-model:leafs="leaf.leafs"
         v-model:value="leaf.value"
         v-model:operator="leaf.operator"
@@ -59,35 +65,46 @@
  
 <script>
 import { uuid } from 'vue-uuid'; 
+import ResultNode from '../components/ResultNode.vue'
 export default {
   name: 'TreeNode',
+  components: {
+    ResultNode
+  },
   props: {
+    root:{
+      type: Boolean
+    },
     leafs: {
       type: Array,
       required: true
     },
     value: {
       type: String,
-      required: true
     },
     variable: {
       type: String,
-      default: '',
-      required: true
     },
     operator: {
       type: String,
-      required: true
     },
   },
   data: () => ({
     state: {
-      modify: false
+      modify: false,
+      result: false,
     },
     leafsMutable: []
   }),
   methods: {
     addLeaf(){
+      // delete result leaf
+      for (const [index, leaf] of this.leafsMutable.entries()){
+        if (leaf.result){
+          this.leafsMutable.splice(index, 1)
+        }
+      }
+
       this.leafsMutable.push({
         id: uuid.v4(),
         value: '',
@@ -101,14 +118,13 @@ export default {
       this.leafsMutable.splice(this.leafsMutable.length-1, 1)
       this.$emit("update:leafs", this.leafsMutable)
     },
-    log(){
-      console.log(this)
-    }
+    addResultLeaf(){
+      this.leafsMutable = []
+      this.leafsMutable.push({
+        result: {}
+      })
+      this.$emit("update:leafs", this.leafsMutable)
+    },
   },
-  created(){
-
-      console.log(this.leafs)
-  }
-
 }
 </script>

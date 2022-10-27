@@ -1,0 +1,113 @@
+{
+  "leafs": [
+    {
+      "id": "f0cc7632-3f1e-4583-a86f-d879df29d5ba",
+      "value": "",
+      "operator": "",
+      "variable": "chidsfv",
+      "leafs": [
+        {
+          "id": "6d12b122-41e8-479a-bf79-093dc7f91784",
+          "value": "fsdfsd",
+          "operator": "sdffsd",
+          "variable": "",
+          "leafs": []
+        },
+        {
+          "id": "44592d9a-dc27-4efc-927c-eb33d450625d",
+          "value": "",
+          "operator": "",
+          "variable": "fsdf",
+          "leafs": []
+        }
+      ]
+    },
+    {
+      "id": "95a76068-59ab-4057-aa32-fdac31196d52",
+      "value": "",
+      "operator": "",
+      "variable": "",
+      "leafs": [
+        {
+          "id": "f90b10f1-07d2-4bf9-92bb-6cdd722ed05f",
+          "value": "sdf",
+          "operator": "sdf",
+          "variable": "sdfsdf",
+          "leafs": [
+            {
+              "id": "57b0a937-9eba-4731-93cc-84f4629f01ad",
+              "value": "",
+              "operator": "",
+              "variable": "",
+              "leafs": []
+            },
+            {
+              "id": "34a9cbeb-da56-402d-88d1-5eca6c5d18bf",
+              "value": "",
+              "operator": "",
+              "variable": "",
+              "leafs": []
+            },
+            {
+              "id": "1d105fe4-ec51-473a-be2e-cfd8d2df8c44",
+              "value": "",
+              "operator": "",
+              "variable": "",
+              "leafs": []
+            },
+            {
+              "id": "61c967f7-2f36-4ebd-aa68-0953eba3c04d",
+              "value": "",
+              "operator": "",
+              "variable": "",
+              "leafs": []
+            },
+            {
+              "id": "d3f58871-f184-4125-941c-b78ea5a8b689",
+              "value": "",
+              "operator": "",
+              "variable": "",
+              "leafs": []
+            },
+            {
+              "id": "117ef7a8-bcb2-4acf-9b1a-64c81d411757",
+              "value": "",
+              "operator": "",
+              "variable": "",
+              "leafs": []
+            },
+            {
+              "id": "0116496c-057f-4dc2-95bc-defb8c661a16",
+              "value": "",
+              "operator": "srthsfgydrtsywsrty",
+              "variable": "",
+              "leafs": []
+            }
+          ]
+        },
+        {
+          "id": "666d27a8-bfb5-4d6c-8c5e-57e46c44f939",
+          "value": "sdfsdfsd",
+          "operator": "",
+          "variable": "",
+          "leafs": []
+        }
+      ]
+    },
+    {
+      "id": "28541dc1-6f8d-4ccb-abef-4d3e138d6d2e",
+      "value": "",
+      "operator": "",
+      "variable": "",
+      "leafs": [
+        {
+          "id": "5dfd2f57-4657-41bd-8943-3715a29f36b2",
+          "value": "",
+          "operator": "",
+          "variable": "",
+          "leafs": []
+        }
+      ]
+    }
+  ]
+}

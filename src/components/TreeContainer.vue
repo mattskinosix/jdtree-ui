@@ -1,10 +1,9 @@
 <template>
 
+  <v-btn icon="fas fa-download" class="ma-5" @click="download"></v-btn>
   <TreeNode 
+    root=true
     v-model:leafs="tree.leafs"
-    v-model:operator="tree.operator"
-    v-model:value="tree.value"
-    v-model:variable="tree.variable"
   >
   </TreeNode>
   <v-textarea
@@ -16,7 +15,6 @@
 
 <script>
 import TreeNode from '../components/TreeNode.vue'
-import { uuid } from 'vue-uuid'; 
 export default {
   name: "TreeContainer",
   components: {
@@ -24,16 +22,25 @@ export default {
   },
   data: () => ({
     tree: {
-      id: uuid.v4(),
-      value: '',
-      operator: '',
-      variable: '',
       leafs: []
     }
   }),
   methods: {
     log(){
       console.log(this.tree)
+    },
+    download(){
+      let text = JSON.stringify(this.tree);
+      let filename = 'tree.json';
+      let element = document.createElement('a');
+      element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', filename);
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+      document.body.removeChild(element);
     }
   },
 }
