@@ -1,4 +1,16 @@
-# jdtree-iu
+#  JDTREE🌴
+Json Decision Tree Editor
+
+
+The mission of this web app is to compose or edit graphically a decision tree or table to use it with [jdtree](github.com/mattskinosix/jdtree)
+
+## Function
+### Create
+Create your decision tree adding condition recursively and when you are finish you can return a Json object with a result node.
+For available condition see [jdtree](github.com/mattskinosix/jdtree)
+
+### upload
+Upload your Json tree to easily edit it.
 
 ## Project setup
 ```
