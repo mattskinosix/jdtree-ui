@@ -1,15 +1,18 @@
 <template>
-
+  <v-file-input
+  truncate-length="15"
+  @change="import_file"
+></v-file-input>
   <v-btn icon="fas fa-download" class="ma-5" @click="download"></v-btn>
   <TreeNode 
-    root=true
+    :root=true
     v-model:leafs="tree.leafs"
   >
   </TreeNode>
   <v-textarea
     disabled
-    readonly>
-    {{ tree }}
+    readonly
+    :value="JSON.stringify(tree)"> 
   </v-textarea>
 </template>
 
@@ -22,12 +25,26 @@ export default {
   },
   data: () => ({
     tree: {
-      leafs: []
+      leafs: [{id: 1 , value: 'value', variable: 'tesst', operator: '=', leafs: []}]
     }
   }),
   methods: {
     log(){
       console.log(this.tree)
+    },
+    import_file(e){
+      console.log(e.target.files)
+      if (e.target.files.length <= 0) {
+        return false;
+      }
+
+      const fr = new FileReader();
+
+      fr.onload = e => {
+        this.tree = JSON.parse(e.target.result);
+        console.log(this.tree)
+      }
+      fr.readAsText(e.target.files[0]);
     },
     download(){
       let text = JSON.stringify(this.tree);

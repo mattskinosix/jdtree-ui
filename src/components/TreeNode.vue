@@ -2,8 +2,6 @@
   <v-container>
     <v-card color="black">
       <v-card-actions >
-          <v-btn v-if="!root" icon="fas fa-edit" @click="state.modify=!state.modify"></v-btn>
-
           <v-btn @click="addLeaf">+ condition</v-btn>
 
           <v-btn @click="addResultLeaf">set result</v-btn>
@@ -16,20 +14,20 @@
           :disabled="state.modify"
           label="variable"
           @input="$emit('update:variable', $event.target.value)"
-          :data-value="variable"
+          v-model="variableData"
         >
         </v-text-field>
         <v-text-field
           :disabled="state.modify"
           label="operator"
           @input="$emit('update:operator', $event.target.value)"
-          :data-value="operator"
+          v-model="operatorData"
         >
         </v-text-field>
         <v-text-field
           :disabled="state.modify"
           @input="$emit('update:value', $event.target.value)"
-          :data-value="value"
+          v-model="valueData"
           label="value"
         >
         </v-text-field>
@@ -91,12 +89,17 @@ export default {
   },
   data: () => ({
     state: {
-      modify: false,
       result: false,
     },
-    leafsMutable: []
+    leafsMutable: [],
+    valueData: '',
+    variableData: '',
+    operatorData:'' 
   }),
   methods: {
+    log(){
+      console.log(this)
+    },
     addLeaf(){
       // delete result leaf
       for (const [index, leaf] of this.leafsMutable.entries()){
@@ -126,5 +129,11 @@ export default {
       this.$emit("update:leafs", this.leafsMutable)
     },
   },
+  created(){
+    this.valueData = this.value
+    this.operatorData = this.operator
+    this.leafsMutable = this.leafs
+    this.variableData = this.variable
+  } 
 }
 </script>
