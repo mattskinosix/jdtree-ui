@@ -3,7 +3,7 @@
   truncate-length="15"
   @change="import_file"
 ></v-file-input>
-  <v-btn icon="fas fa-download" class="ma-5" @click="download"></v-btn>
+  <v-btn icon="mdi-download" class="ma-5" @click="download"></v-btn>
   <TreeNode 
     :root=true
     v-model:leafs="tree.leafs"
@@ -25,7 +25,7 @@ export default {
   },
   data: () => ({
     tree: {
-      leafs: [{id: 1 , value: 'value', variable: 'tesst', operator: '=', leafs: []}]
+      leafs: []
     }
   }),
   methods: {
