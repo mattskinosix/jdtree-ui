@@ -1,12 +1,20 @@
 <template>
   <v-container>
-    <v-card color="black" >
-      <v-card-actions >
+    <v-card color="black" style="border-radius: 30px;" >
+      <v-card-actions class="cardAction">
+
+        <v-col>
           <v-btn @click="addLeaf">+ </v-btn>
+        </v-col>
 
+        <v-col>
           <v-btn @click="addResultLeaf"> result</v-btn>
+        </v-col>
 
+        <v-col>
           <v-btn @click="removeLeaf"> - </v-btn>
+        </v-col>
+
       </v-card-actions>
 
       <v-card-actions v-if="!root">
@@ -34,7 +42,7 @@
       </v-card-actions>
     </v-card>
   </v-container>
-  <v-row :style="{backgroundColor: randomColor(), 'border-radius': '30px'}" class="ma-5">
+  <v-row :style="{backgroundColor: randomColor , 'border-radius': '30px'}" class="ma-5">
     <v-col 
       v-for="leaf in leafs"
       :key="leaf.id" 
@@ -94,10 +102,11 @@ export default {
     leafsMutable: [],
     valueData: '',
     variableData: '',
-    operatorData:'' 
+    operatorData:'', 
+    randomColor: '',
   }),
   methods: {
-    randomColor() {
+    randomColorFunc() {
       const r = () => Math.floor(256 * Math.random());
       return`rgb(${r()}, ${r()}, ${r()})`;
     },
@@ -135,6 +144,14 @@ export default {
     this.operatorData = this.operator
     this.leafsMutable = this.leafs
     this.variableData = this.variable
+    this.randomColor = this.randomColorFunc()
   } 
 }
 </script>
+<style scoped>
+.cardAction {
+  text-align:center;
+  align-items: center;
+  color: white;
+}
+</style>
