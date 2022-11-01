@@ -1,5 +1,6 @@
 <template>
-  <v-container>
+  <v-row>
+  <v-col class="d-flex flex-column" >
     <v-card color="black">
       <v-card-actions >
           <v-btn @click="addLeaf">+ condition</v-btn>
@@ -33,9 +34,9 @@
         </v-text-field>
       </v-card-actions>
     </v-card>
-  </v-container>
-  <v-row>
-    <v-col 
+  </v-col>
+  <v-col>
+    <v-row 
       v-for="leaf in leafs"
       :key="leaf.id" 
     >
@@ -49,16 +50,17 @@
         v-model:result="leaf.result"
       />
 
-      <TreeNode 
+      <TreeNode class="mb-1" 
         v-if="!leaf.hasOwnProperty('result')"
         v-model:leafs="leaf.leafs"
         v-model:value="leaf.value"
         v-model:operator="leaf.operator"
         v-model:variable="leaf.variable"
       />
-      </v-col>
-  </v-row>
+    </v-row>
+  </v-col>
 
+  </v-row>
 </template>
  
 <script>
