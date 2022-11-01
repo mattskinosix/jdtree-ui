@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card color="black">
+    <v-card color="black" >
       <v-card-actions >
           <v-btn @click="addLeaf">+ condition</v-btn>
 
@@ -39,7 +39,7 @@
       v-for="leaf in leafs"
       :key="leaf.id" 
     >
-      <v-icon icon="fas fa-arrow-down-long">
+      <v-icon icon="mdi-arrow-down">
 
       </v-icon>
         <br>

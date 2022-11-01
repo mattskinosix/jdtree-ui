@@ -1,19 +1,33 @@
 <template>
-  <v-file-input
-  truncate-length="15"
-  @change="import_file"
-></v-file-input>
-  <v-btn icon="mdi-download" class="ma-5" @click="download"></v-btn>
+  <v-toolbar title="JDTREE">
+
+    <v-col>
+      <v-file-input
+        accept="image/json"
+        hide-details
+        @change="import_file"
+      ></v-file-input>
+
+
+    </v-col>
+
+    <v-col>
+      <v-btn icon="mdi-download" class="" @click="download"></v-btn>
+    </v-col>
+  </v-toolbar>
+  <v-row>
+    <v-textarea
+      disabled
+      readonly
+      :value="JSON.stringify(tree)"> 
+    </v-textarea>
+  </v-row>
   <TreeNode 
     :root=true
     v-model:leafs="tree.leafs"
   >
   </TreeNode>
-  <v-textarea
-    disabled
-    readonly
-    :value="JSON.stringify(tree)"> 
-  </v-textarea>
+
 </template>
 
 <script>
