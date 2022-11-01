@@ -2,11 +2,11 @@
   <v-container>
     <v-card color="black" >
       <v-card-actions >
-          <v-btn @click="addLeaf">+ condition</v-btn>
+          <v-btn @click="addLeaf">+ </v-btn>
 
-          <v-btn @click="addResultLeaf">set result</v-btn>
+          <v-btn @click="addResultLeaf"> result</v-btn>
 
-          <v-btn @click="removeLeaf"> - condition</v-btn>
+          <v-btn @click="removeLeaf"> - </v-btn>
       </v-card-actions>
 
       <v-card-actions v-if="!root">
@@ -34,7 +34,7 @@
       </v-card-actions>
     </v-card>
   </v-container>
-  <v-row>
+  <v-row :style="{backgroundColor: randomColor(), 'border-radius': '30px'}" class="ma-5">
     <v-col 
       v-for="leaf in leafs"
       :key="leaf.id" 
@@ -97,8 +97,9 @@ export default {
     operatorData:'' 
   }),
   methods: {
-    log(){
-      console.log(this)
+    randomColor() {
+      const r = () => Math.floor(256 * Math.random());
+      return`rgb(${r()}, ${r()}, ${r()})`;
     },
     addLeaf(){
       // delete result leaf
