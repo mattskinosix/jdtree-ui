@@ -1,4 +1,5 @@
 <template>
+
   <v-toolbar title="JDTREE">
 
     <v-col>
@@ -22,26 +23,52 @@
       :value="JSON.stringify(tree)"> 
     </v-textarea>
   </v-row>
-  <TreeNode 
-    :root=true
-    v-model:leafs="tree.leafs"
+  <VueZoomable
+    :minZoom="0"
+    :maxZoom="1"
+    :wheelZoomStep="0.01"
   >
-  </TreeNode>
+    <div :style="{ width: divWidth + '%' }"> 
+      <TreeNode 
+        :root=true
+        v-model:leafs="tree.leafs"
+      >
+      </TreeNode>
+
+    </div>
+  </VueZoomable>
 
 </template>
 
 <script>
 import TreeNode from '../components/TreeNode.vue'
+import VueZoomable from "vue-zoomable";
 export default {
   name: "TreeContainer",
   components: {
-    TreeNode
+    TreeNode,
+    VueZoomable
   },
   data: () => ({
     tree: {
       leafs: []
-    }
+    },
+    divWidth:100,
   }),
+  watch: {
+    // whenever question changes, this function will run
+    tree:{
+      handler(newTree, oldTree){
+        console.log(this.divWidth, oldTree)
+        this.divWidth += 10*newTree.leafs.length;
+        for (const leaf in newTree.leafs){
+          if (leaf.leafs)
+          this.divWidth+=10 *leaf.leafs.length
+        }
+      },
+      deep: true
+    }
+  },
   methods: {
     log(){
       console.log(this.tree)

@@ -1,6 +1,7 @@
 <template>
-  <v-container>
-    <v-card color="black" style="border-radius: 30px;" >
+  <div >
+
+    <v-card color="black" style="border-radius: 30px;">
       <v-card-actions class="cardAction">
 
         <v-col>
@@ -41,7 +42,6 @@
         </v-text-field>
       </v-card-actions>
     </v-card>
-  </v-container>
   <v-row :style="{backgroundColor: randomColor , 'border-radius': '30px'}" class="ma-5">
     <v-col 
       v-for="leaf in leafs"
@@ -67,6 +67,7 @@
       </v-col>
   </v-row>
 
+  </div>
 </template>
  
 <script>

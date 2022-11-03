@@ -14,8 +14,10 @@
     "roboto-fontface": "*",
     "typescript": "^4.8.4",
     "vue": "^3.0.0",
+    "vue-panzoom": "^1.1.6",
     "vue-router": "^4.0.0-0",
     "vue-uuid": "^3.0.0",
+    "vue-zoomable": "^1.0.9",
     "vuetify": "^3.0.0-beta.13",
     "webfontloader": "^1.0.0"
   },
