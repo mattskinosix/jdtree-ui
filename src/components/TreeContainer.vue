@@ -13,7 +13,7 @@
     </v-col>
 
     <v-col>
-      <v-btn icon="mdi-download" class="" @click="download"></v-btn>
+      <v-btn icon="mdi-download" class="" @click="log"></v-btn>
     </v-col>
   </v-toolbar>
   <v-row>
@@ -23,55 +23,53 @@
       :value="JSON.stringify(tree)"> 
     </v-textarea>
   </v-row>
-  <VueZoomable
-    :minZoom="0"
-    :maxZoom="1"
-    :wheelZoomStep="0.01"
-  >
-    <div :style="{ width: divWidth + '%' }"> 
+
+
+  <div :style="{ transform }" ref="myid">
+    <div :style="{ width: divWidth + this.store.width + '%',height: divWidth + this.store.width + '%' , 'transform': 'scale('+Math.pow((divWidth + this.store.width)*1.2/100,-1)+') translate(-'+this.store.width*0.6+'%) translateY(-'+this.store.width*0.4+'%)'}"> 
       <TreeNode 
         :root=true
+        v-model:sumWidth="sumWidth"
         v-model:leafs="tree.leafs"
       >
       </TreeNode>
 
     </div>
-  </VueZoomable>
-
+  </div>
 </template>
 
 <script>
 import TreeNode from '../components/TreeNode.vue'
-import VueZoomable from "vue-zoomable";
+import { useTreeStore } from '@/stores/tree'
 export default {
   name: "TreeContainer",
   components: {
     TreeNode,
-    VueZoomable
   },
   data: () => ({
     tree: {
       leafs: []
     },
     divWidth:100,
+    padding: false,
+    transform: '',
+    mouseX: 0,
+    mouseY: 0,
+    mouseTX: 0,
+    mouseTY: 0,
+    ts: {
+      scale: 1,
+      rotate: 0,
+      translate: {
+        x: 0,
+        y: 0
+      }
+    },
+
   }),
-  watch: {
-    // whenever question changes, this function will run
-    tree:{
-      handler(newTree, oldTree){
-        console.log(this.divWidth, oldTree)
-        this.divWidth += 10*newTree.leafs.length;
-        for (const leaf in newTree.leafs){
-          if (leaf.leafs)
-          this.divWidth+=10 *leaf.leafs.length
-        }
-      },
-      deep: true
-    }
-  },
   methods: {
     log(){
-      console.log(this.tree)
+      console.log(this.sumWidth)
     },
     import_file(e){
       console.log(e.target.files)
@@ -99,6 +97,63 @@ export default {
 
       element.click();
       document.body.removeChild(element);
+    },
+    grabbing(event) {
+      if (this.padding){
+        const x = event.clientX;
+        const y = event.clientY;
+        this.ts.translate.x = this.mouseTX + (x - this.mouseX);
+        this.ts.translate.y = this.mouseTY + (y - this.mouseY);
+        this.setTransform();
+      }
+    },
+    start_grabbing(event) {
+      this.padding = true
+      this.mouseX = event.clientX;
+      this.mouseY = event.clientY;
+      this.mouseTX = this.ts.translate.x;
+      this.mouseTY = this.ts.translate.y;
+    },
+    end_grabbing() {
+      this.padding = false
+    },
+    zoom(event) {
+      //need more handling  to avoid fast scrolls
+      let rec = this.$refs.myid.getBoundingClientRect();
+      let x = (event.clientX - rec.x) / this.ts.scale;
+      let y = (event.clientY - rec.y) / this.ts.scale;
+
+      let delta = (event.wheelDelta ? event.wheelDelta : -event.deltaY);
+      this.ts.scale = (delta > 0.3) ? (this.ts.scale + 0.2) : (this.ts.scale - 0.2);
+
+      //let m = (ts.scale - 1) / 2;
+      let m = (delta > 0.3) ? 0.1 : -0.1;
+      this.ts.translate.x += (-x * m * 2) + (this.$refs['myid'].offsetWidth * m);
+      this.ts.translate.y += (-y * m * 2) + (this.$refs['myid'].offsetHeight * m);
+      this.setTransform()
+    },
+    setTransform() {
+      this.transform = `translate(${this.ts.translate.x}px,${this.ts.translate.y}px) scale(${this.ts.scale})`;
+    }
+  },
+  created() {
+    window.addEventListener('wheel', (e) => {
+      this.zoom(e)
+    });
+    window.addEventListener('mousedown', (e) => {
+      this.start_grabbing(e)
+    });
+    window.addEventListener('mouseup', (e) => {
+      this.end_grabbing(e)
+    });
+    window.addEventListener('mousemove', (e) => {
+      this.grabbing(e)
+    });
+  },
+  setup() {
+    const store = useTreeStore()
+    return {
+      store,
     }
   },
 }
