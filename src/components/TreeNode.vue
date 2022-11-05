@@ -63,6 +63,7 @@
         v-model:value="leaf.value"
         v-model:operator="leaf.operator"
         v-model:variable="leaf.variable"
+        v-model:sumWidth="sumWidthData"
       />
       </v-col>
   </v-row>
@@ -73,6 +74,8 @@
 <script>
 import { uuid } from 'vue-uuid'; 
 import ResultNode from '../components/ResultNode.vue'
+import { useTreeStore } from '@/stores/tree'
+
 export default {
   name: 'TreeNode',
   components: {
@@ -95,6 +98,9 @@ export default {
     operator: {
       type: String,
     },
+    sumWidth:{
+      type: Number
+    }
   },
   data: () => ({
     state: {
@@ -105,6 +111,7 @@ export default {
     variableData: '',
     operatorData:'', 
     randomColor: '',
+    sumWidthData: 0,
   }),
   methods: {
     randomColorFunc() {
@@ -112,6 +119,8 @@ export default {
       return`rgb(${r()}, ${r()}, ${r()})`;
     },
     addLeaf(){
+
+      const store = useTreeStore()
       // delete result leaf
       for (const [index, leaf] of this.leafsMutable.entries()){
         if (leaf.result){
@@ -127,10 +136,14 @@ export default {
         leafs: []
       })
       this.$emit("update:leafs", this.leafsMutable)
+      store.width += 15
     },
     removeLeaf(){
+
+      const store = useTreeStore()
       this.leafsMutable.splice(this.leafsMutable.length-1, 1)
       this.$emit("update:leafs", this.leafsMutable)
+      store.width -= 15
     },
     addResultLeaf(){
       this.leafsMutable = []
@@ -145,8 +158,18 @@ export default {
     this.operatorData = this.operator
     this.leafsMutable = this.leafs
     this.variableData = this.variable
+    this.sumWidthData = this.sumWidth
     this.randomColor = this.randomColorFunc()
-  } 
+  },
+  setup() {
+    const store = useTreeStore()
+
+    return {
+      // you can return the whole store instance to use it in the template
+      store,
+    }
+  },
+
 }
 </script>
 <style scoped>
