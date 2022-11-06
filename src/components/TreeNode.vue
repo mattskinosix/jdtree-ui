@@ -145,7 +145,7 @@ export default {
         leafs: []
       })
       this.$emit("update:leafs", this.leafsMutable)
-      store.width += this.$vuetify.display.xs ? 50 : 15
+      store.width += this.$vuetify.display.xs ? 150 : 15
     },
     removeLeaf(){
 
@@ -153,7 +153,7 @@ export default {
       this.leafsMutable.splice(this.leafsMutable.length-1, 1)
       this.$emit("update:leafs", this.leafsMutable)
       console.log(this.$vuetify)
-      store.width -=  this.$vuetify.display.xs ? 50 : 15
+      store.width -=  this.$vuetify.display.xs ? 100 : 15
     },
     addResultLeaf(){
       this.leafsMutable = []
