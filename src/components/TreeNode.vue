@@ -18,14 +18,9 @@
 
       </v-card-actions>
 
+
       <v-card-actions v-if="!root">
-        <v-text-field
-          :disabled="state.modify"
-          label="variable"
-          @input="$emit('update:variable', $event.target.value)"
-          v-model="variableData"
-        >
-        </v-text-field>
+
         <v-text-field
           :disabled="state.modify"
           label="operator"
@@ -42,11 +37,25 @@
         </v-text-field>
       </v-card-actions>
     </v-card>
-  <v-row :style="{backgroundColor: randomColor , 'border-radius': '30px'}" class="ma-5">
-    <v-col 
-      v-for="leaf in leafs"
-      :key="leaf.id" 
-    >
+      <div :style="{backgroundColor: randomColor , 'border-radius': '30px'}" v-if="leafs.length">
+        
+      <v-row >
+        <v-col>
+<v-text-field 
+        :disabled="state.modify"
+        label="variable"
+        @input="$emit('update:variable', $event.target.value)"
+        v-model="variableData"
+      >
+
+            </v-text-field>
+        </v-col>
+      </v-row>
+    <v-row  class="ma-5">
+      <v-col 
+        v-for="leaf in leafs"
+        :key="leaf.id" 
+      >
       <v-icon icon="mdi-arrow-down">
 
       </v-icon>
@@ -67,7 +76,7 @@
       />
       </v-col>
   </v-row>
-
+</div>
   </div>
 </template>
  
@@ -136,14 +145,15 @@ export default {
         leafs: []
       })
       this.$emit("update:leafs", this.leafsMutable)
-      store.width += 15
+      store.width += this.$vuetify.display.xs ? 50 : 15
     },
     removeLeaf(){
 
       const store = useTreeStore()
       this.leafsMutable.splice(this.leafsMutable.length-1, 1)
       this.$emit("update:leafs", this.leafsMutable)
-      store.width -= 15
+      console.log(this.$vuetify)
+      store.width -=  this.$vuetify.display.xs ? 50 : 15
     },
     addResultLeaf(){
       this.leafsMutable = []
