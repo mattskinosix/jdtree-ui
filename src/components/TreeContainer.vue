@@ -26,7 +26,7 @@
 
 
   <div :style="{ transform }" ref="myid">
-    <div :style="{ width: divWidth + this.store.width + '%',height: divWidth + this.store.width + '%' , 'transform': 'scale('+Math.pow((divWidth + this.store.width)*1.05/100,-1)+') translate(-'+this.store.width*0.53+'%) translateY(-'+this.store.width*0.5+'%)'}"> 
+    <div :style="{ width: divWidth + this.store.width + '%',height: divWidth + this.store.width + '%' , 'transform': 'scale('+Math.pow((divWidth + this.store.width)*1.05/100,-1)+') translate(-'+this.store.width* (this.$vuetify.display.xs ? 0.525: 0.53)+'%) translateY(-'+this.store.width*0.5+'%)'}"> 
       <TreeNode 
         :root=true
         v-model:sumWidth="sumWidth"
