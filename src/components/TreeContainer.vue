@@ -26,11 +26,12 @@
 
 
   <div :style="{ transform }" ref="myid">
-    <div :style="{ width: divWidth + this.store.width + '%',height: divWidth + this.store.width + '%' , 'transform': 'scale('+Math.pow((divWidth + this.store.width)*1.2/100,-1)+') translate(-'+this.store.width*0.6+'%) translateY(-'+this.store.width*0.4+'%)'}"> 
+    <div :style="{ width: divWidth + this.store.width + '%',height: divWidth + this.store.width + '%' , 'transform': 'scale('+Math.pow((divWidth + this.store.width)*1.05/100,-1)+') translate(-'+this.store.width*0.53+'%) translateY(-'+this.store.width*0.5+'%)'}"> 
       <TreeNode 
         :root=true
         v-model:sumWidth="sumWidth"
         v-model:leafs="tree.leafs"
+        v-model:variable="tree.variable"
       >
       </TreeNode>
 
@@ -48,6 +49,7 @@ export default {
   },
   data: () => ({
     tree: {
+      variable: "",
       leafs: []
     },
     divWidth:100,
@@ -57,6 +59,7 @@ export default {
     mouseY: 0,
     mouseTX: 0,
     mouseTY: 0,
+    mapKey: {},
     ts: {
       scale: 1,
       rotate: 0,
@@ -137,16 +140,25 @@ export default {
     }
   },
   created() {
+
+
     window.addEventListener('wheel', (e) => {
+
+      if(e.metaKey == true)
       this.zoom(e)
     });
     window.addEventListener('mousedown', (e) => {
+
+      if(e.ctrlKey == true)
       this.start_grabbing(e)
     });
     window.addEventListener('mouseup', (e) => {
+
+      if(e.ctrlKey == true)
       this.end_grabbing(e)
     });
     window.addEventListener('mousemove', (e) => {
+      if(e.ctrlKey == true)
       this.grabbing(e)
     });
   },
