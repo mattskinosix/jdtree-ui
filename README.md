@@ -1,7 +1,7 @@
 #  JDTREE🌴
 Json Decision Tree Editor
 
-Build or edit graphically a decision tree or table to use it with [jdtree](github.com/mattskinosix/jdtree)
+Build or edit graphically a decision tree or table to use it with [jdtree](https://github.com/mattskinosix/jdtree)
 
 ## Function
 ### Create
