@@ -148,7 +148,7 @@ export default {
       store.width += this.$vuetify.display.xs ? 150 : 15
     },
     removeLeaf(){
-      if(this.leafsMutable.legnth){
+      if(this.leafsMutable.length){
         const store = useTreeStore()
         this.leafsMutable.splice(this.leafsMutable.length-1, 1)
         this.$emit("update:leafs", this.leafsMutable)
