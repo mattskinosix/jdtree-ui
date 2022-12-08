@@ -165,12 +165,13 @@ export default {
       store.width += this.$vuetify.display.xs ? 150 : 15
     },
     removeLeaf(){
-
-      const store = useTreeStore()
-      this.leafsMutable.splice(this.leafsMutable.length-1, 1)
-      this.$emit("update:leafs", this.leafsMutable)
-      console.log(this.$vuetify)
-      store.width -=  this.$vuetify.display.xs ? 100 : 15
+      if(this.leafsMutable.length){
+        const store = useTreeStore()
+        this.leafsMutable.splice(this.leafsMutable.length-1, 1)
+        this.$emit("update:leafs", this.leafsMutable)
+        console.log(this.$vuetify)
+        store.width -=  this.$vuetify.display.xs ? 100 : 15
+      }
     },
     addResultLeaf(){
       this.leafsMutable = []

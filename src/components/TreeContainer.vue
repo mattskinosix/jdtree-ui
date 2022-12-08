@@ -25,8 +25,13 @@
   </v-row>
 
 
+<<<<<<< feat/zoom
   <div :style="{ transform , backgroundColor: 'grey'}"  ref="myid">
     <div class="mt-5" :style="{ width: divWidth + this.store.width + '%',height: divWidth + this.store.width + '%' , 'transform': 'scale('+Math.pow((divWidth + this.store.width)*1.05/100,-1)+') translate(-'+this.store.width*  0.525+'%) translateY(-'+this.store.width*0.5+'%)'}"> 
+=======
+  <div :style="{ transform }" ref="myid">
+    <div :style="{'overflow-y': 'hidden', width: divWidth + this.store.width + '%',height: divWidth + this.store.width + '%' , 'transform': 'scale('+Math.pow((divWidth + this.store.width)*1.05/100,-1)+') translate(-'+this.store.width*  0.525+'%) translateY(-'+this.store.width*0.5+'%)'}"> 
+>>>>>>> main
       <TreeNode 
         :root=true
         v-model:leafs="tree.root.leafs"
