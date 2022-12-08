@@ -1,23 +1,17 @@
 <template>
   <div >
-
-    <v-card color="black" style="border-radius: 30px;">
+    <v-card color="black" style="border-radius: 30px;" >
       <v-card-actions class="cardAction">
-
         <v-col>
           <v-btn @click="addLeaf">+ </v-btn>
         </v-col>
-
         <v-col>
           <v-btn @click="addResultLeaf"> result</v-btn>
         </v-col>
-
         <v-col>
           <v-btn @click="removeLeaf"> - </v-btn>
         </v-col>
-
       </v-card-actions>
-
 
       <v-card-actions v-if="!root">
 
@@ -37,54 +31,72 @@
         </v-text-field>
       </v-card-actions>
     </v-card>
-      <div :style="{backgroundColor: randomColor , 'border-radius': '30px'}" v-if="leafs.length">
-        
-      <v-row >
-        <v-col>
-<v-text-field 
-        :disabled="state.modify"
-        label="variable"
-        @input="$emit('update:variable', $event.target.value)"
-        v-model="variableData"
+    <div :style="{backgroundColor: randomColor , 'border-radius': '30px'}" v-if="leafs.length">
+      <v-row 
+        class="ma-16"
+        style="justify-content:center"
       >
+        <v-col
+          v-if="!leafs[0].hasOwnProperty('result')"
+        >
+          <v-card color="black" style="border-radius: 30px;">
+            <v-card-title>
+              variable
+            </v-card-title>
+            <v-card-actions>
+              <v-text-field 
+                color="white"
+                :disabled="state.modify"
+                @input="$emit('update:variableName', $event.target.value)"
+                v-model="variableNameData"
+              >
+              </v-text-field>
+              <v-select 
+                :items="this.allowed_types"
+                color="white"
+                @update:modelValue="$emit('update:variableType', $event)"
+                v-model="variableTypeData"
+              >
+              </v-select>
 
-            </v-text-field>
+            </v-card-actions>
+          </v-card>
         </v-col>
       </v-row>
-    <v-row  class="ma-5">
-      <v-col 
-        v-for="leaf in leafs"
-        :key="leaf.id" 
-      >
-      <v-icon icon="mdi-arrow-down">
+      <v-row class="ma-5">
+        <v-col 
+          v-for="leaf in leafs"
+          :key="leaf.id" 
+        >
+          <v-icon icon="mdi-arrow-down">
 
-      </v-icon>
-        <br>
-      
-      <ResultNode 
-        v-if="leaf.hasOwnProperty('result')"
-        v-model:result="leaf.result"
-      />
+          </v-icon>
+          <br>
 
-      <TreeNode 
-        v-if="!leaf.hasOwnProperty('result')"
-        v-model:leafs="leaf.leafs"
-        v-model:value="leaf.value"
-        v-model:operator="leaf.operator"
-        v-model:variable="leaf.variable"
-        v-model:sumWidth="sumWidthData"
-      />
-      </v-col>
-  </v-row>
-</div>
+          <ResultNode 
+            v-if="leaf.hasOwnProperty('result')"
+            v-model:result="leaf.result"
+          />
+
+          <TreeNode 
+            v-if="!leaf.hasOwnProperty('result')"
+            v-model:leafs="leaf.leafs"
+            v-model:value="leaf.value"
+            v-model:operator="leaf.operator"
+            v-model:variableName="leaf.variableName"
+            v-model:variableType="leaf.variableType"
+          />
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
- 
+
 <script>
 import { uuid } from 'vue-uuid'; 
 import ResultNode from '../components/ResultNode.vue'
 import { useTreeStore } from '@/stores/tree'
-
+import ALLOWED_TYPES from '@/constants/allowed_type.js'
 export default {
   name: 'TreeNode',
   components: {
@@ -101,17 +113,18 @@ export default {
     value: {
       type: String,
     },
-    variable: {
+    variableName: {
       type: String,
     },
     operator: {
       type: String,
     },
-    sumWidth:{
-      type: Number
+    variableType: {
+      type: String
     }
   },
   data: () => ({
+    allowed_types: ALLOWED_TYPES,
     state: {
       result: false,
     },
@@ -119,10 +132,15 @@ export default {
     valueData: '',
     variableData: '',
     operatorData:'', 
+    variableTypeData:'', 
+    variableNameData:'', 
     randomColor: '',
     sumWidthData: 0,
   }),
   methods: {
+    log(e){
+      console.log(e)
+    },
     randomColorFunc() {
       const r = () => Math.floor(256 * Math.random());
       return`rgb(${r()}, ${r()}, ${r()})`;
@@ -141,7 +159,6 @@ export default {
         id: uuid.v4(),
         value: '',
         operator: '',
-        variable: '',
         leafs: []
       })
       this.$emit("update:leafs", this.leafsMutable)
@@ -168,8 +185,8 @@ export default {
     this.valueData = this.value
     this.operatorData = this.operator
     this.leafsMutable = this.leafs
-    this.variableData = this.variable
-    this.sumWidthData = this.sumWidth
+    this.variableNameData = this.variableName
+    this.variableTypeData = this.variableType
     this.randomColor = this.randomColorFunc()
   },
   setup() {
