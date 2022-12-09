@@ -13,7 +13,7 @@
     </v-col>
 
     <v-col>
-      <v-btn icon="mdi-download" class="" @click="log"></v-btn>
+      <v-btn icon="mdi-download" class="" @click="download"></v-btn>
     </v-col>
   </v-toolbar>
   <v-row>
@@ -25,9 +25,9 @@
   </v-row>
 
 
-
   <div :style="{ transform , backgroundColor: 'grey'}"  ref="myid">
     <div class="mt-5" :style="{ width: divWidth + this.store.width + '%',height: divWidth + this.store.width + '%' , 'transform': 'scale('+Math.pow((divWidth + this.store.width)*1.05/100,-1)+') translate(-'+this.store.width*  0.525+'%) translateY(-'+this.store.width*0.5+'%)'}"> 
+
       <TreeNode 
         :root=true
         v-model:leafs="tree.root.leafs"
@@ -75,18 +75,7 @@ export default {
 
   }),
   methods: {
-    setZoom(el) {
-      let transformOrigin = [0,0];
-      var p = ["webkit", "moz", "ms", "o"], s = "scale(" + 5 + ")", oString = (transformOrigin[0] * 100) + "% " + (transformOrigin[1] * 100) + "%";
 
-      for (var i = 0; i < p.length; i++) {
-        el.style[p[i] + "Transform"] = s;
-        el.style[p[i] + "TransformOrigin"] = oString;
-      }
-
-      el.style["transform"] = s;
-      el.style["transformOrigin"] = oString;
-    },
     import_file(e){
       console.log(e.target.files)
       if (e.target.files.length <= 0) {
@@ -156,11 +145,11 @@ export default {
 
 
     window.addEventListener('wheel', (e) => {
-      if(e.metaKey == true)
+      if(e.shiftKey == true){
         e.preventDefault()
 
-      if(e.altKey == true)
         this.zoom(e)
+      }
     },{ passive:false });
     window.addEventListener('mousedown', (e) => {
       if(e.ctrlKey == true)

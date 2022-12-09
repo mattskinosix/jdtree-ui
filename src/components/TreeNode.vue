@@ -14,7 +14,6 @@
       </v-card-actions>
 
       <v-card-actions v-if="!root">
-
         <v-text-field
           :disabled="state.modify"
           label="operator"
@@ -22,6 +21,7 @@
           v-model="operatorData"
         >
         </v-text-field>
+
         <v-text-field
           :disabled="state.modify"
           @input="$emit('update:value', $event.target.value)"
@@ -30,7 +30,12 @@
         >
         </v-text-field>
       </v-card-actions>
+
     </v-card>
+
+    <v-icon icon="mdi-arrow-down" size="100" v-if="this.leafs.length">
+
+    </v-icon>
     <div :style="{backgroundColor: randomColor , 'border-radius': '30px'}" v-if="leafs.length">
       <v-row 
         class="ma-16"
@@ -39,6 +44,7 @@
         <v-col
           v-if="!leafs[0].hasOwnProperty('result')"
         >
+
           <v-card color="black" style="border-radius: 30px;">
             <v-card-title>
               variable
@@ -68,10 +74,7 @@
           v-for="leaf in leafs"
           :key="leaf.id" 
         >
-          <v-icon icon="mdi-arrow-down">
 
-          </v-icon>
-          <br>
 
           <ResultNode 
             v-if="leaf.hasOwnProperty('result')"
@@ -86,6 +89,7 @@
             v-model:variableName="leaf.variableName"
             v-model:variableType="leaf.variableType"
           />
+          <br>
         </v-col>
       </v-row>
     </div>
@@ -138,9 +142,6 @@ export default {
     sumWidthData: 0,
   }),
   methods: {
-    log(e){
-      console.log(e)
-    },
     randomColorFunc() {
       const r = () => Math.floor(256 * Math.random());
       return`rgb(${r()}, ${r()}, ${r()})`;
