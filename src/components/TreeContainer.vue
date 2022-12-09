@@ -13,7 +13,7 @@
     </v-col>
 
     <v-col>
-      <v-btn icon="mdi-download" class="" @click="log"></v-btn>
+      <v-btn icon="mdi-download" class="" @click="download"></v-btn>
     </v-col>
   </v-toolbar>
   <v-row>
@@ -79,18 +79,7 @@ export default {
 
   }),
   methods: {
-    setZoom(el) {
-      let transformOrigin = [0,0];
-      var p = ["webkit", "moz", "ms", "o"], s = "scale(" + 5 + ")", oString = (transformOrigin[0] * 100) + "% " + (transformOrigin[1] * 100) + "%";
 
-      for (var i = 0; i < p.length; i++) {
-        el.style[p[i] + "Transform"] = s;
-        el.style[p[i] + "TransformOrigin"] = oString;
-      }
-
-      el.style["transform"] = s;
-      el.style["transformOrigin"] = oString;
-    },
     import_file(e){
       console.log(e.target.files)
       if (e.target.files.length <= 0) {
@@ -160,11 +149,11 @@ export default {
 
 
     window.addEventListener('wheel', (e) => {
-      if(e.metaKey == true)
+      if(e.shiftKey == true){
         e.preventDefault()
 
-      if(e.altKey == true)
         this.zoom(e)
+      }
     },{ passive:false });
     window.addEventListener('mousedown', (e) => {
       if(e.ctrlKey == true)
