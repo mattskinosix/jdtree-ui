@@ -75,6 +75,13 @@ export default {
 
   }),
   methods: {
+    adaptWidth(tree){
+
+      this.store.width = tree.leafs.length * 500
+      for(let leaf in tree.leafs){
+        this.adaptWidth(leaf);
+      }
+    },
 
     import_file(e){
       console.log(e.target.files)
@@ -86,6 +93,8 @@ export default {
 
       fr.onload = e => {
         this.tree = JSON.parse(e.target.result);
+
+        this.adaptWidth(this.tree.root);
         console.log(this.tree)
       }
       fr.readAsText(e.target.files[0]);
