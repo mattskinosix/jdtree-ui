@@ -14,21 +14,24 @@
       </v-card-actions>
 
       <v-card-actions v-if="!root">
-        <v-text-field
-          :disabled="state.modify"
-          label="operator"
-          @input="$emit('update:operator', $event.target.value)"
-          v-model="operatorData"
-        >
-        </v-text-field>
-
-        <v-text-field
-          :disabled="state.modify"
-          @input="$emit('update:value', $event.target.value)"
-          v-model="valueData"
-          label="value"
-        >
-        </v-text-field>
+        <v-col>
+          <v-text-field
+            :disabled="state.modify"
+            label="operator"
+            @input="$emit('update:operator', $event.target.value)"
+            v-model="operatorData"
+          >
+          </v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            :disabled="state.modify"
+            @input="$emit('update:value', $event.target.value)"
+            v-model="valueData"
+            label="value"
+          >
+          </v-text-field>
+        </v-col>
       </v-card-actions>
 
     </v-card>
@@ -50,21 +53,26 @@
               variable
             </v-card-title>
             <v-card-actions>
-              <v-text-field 
-                color="white"
-                :disabled="state.modify"
-                @input="$emit('update:variableName', $event.target.value)"
-                v-model="variableNameData"
-              >
-              </v-text-field>
-              <v-select 
-                :items="this.allowed_types"
-                color="white"
-                @update:modelValue="$emit('update:variableType', $event)"
-                v-model="variableTypeData"
-              >
-              </v-select>
-
+              <v-col>
+                <v-text-field 
+                  label="name"
+                  color="white"
+                  :disabled="state.modify"
+                  @input="$emit('update:variableName', $event.target.value)"
+                  v-model="variableNameData"
+                >
+                </v-text-field>
+              </v-col>         
+              <v-col>
+                <v-select 
+                  label="type"
+                  :items="this.allowed_types"
+                  color="white"
+                  @update:modelValue="$emit('update:variableType', $event)"
+                  v-model="variableTypeData"
+                >
+                </v-select>
+              </v-col>
             </v-card-actions>
           </v-card>
         </v-col>
