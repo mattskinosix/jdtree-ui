@@ -1,6 +1,7 @@
 const ALLOWED_TYPES = [
   'string',
-  'number'
+  'number',
+  'object'
 ];
 
 export default ALLOWED_TYPES;
