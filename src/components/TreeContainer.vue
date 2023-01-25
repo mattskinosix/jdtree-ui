@@ -77,7 +77,7 @@ export default {
   methods: {
     adaptWidth(tree){
 
-      this.store.width = tree.leafs.length * 500
+      this.store.width = tree.leafs.length * 300
       for(let leaf in tree.leafs){
         this.adaptWidth(leaf);
       }
@@ -100,7 +100,7 @@ export default {
       fr.readAsText(e.target.files[0]);
     },
     download(){
-      let text = JSON.stringify(this.tree);
+      let text = JSON.stringify(this.tree, null, 4);
       let filename = 'tree.json';
       let element = document.createElement('a');
       element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(text));
